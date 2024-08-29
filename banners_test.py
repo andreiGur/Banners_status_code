@@ -21,6 +21,7 @@ class FunctionsClass:
         chrome_options.add_argument("--disable-dev-shm-usage")
         chrome_options.add_argument("--disable-gpu")
         chrome_options.add_argument("--window-size=1920,1080")
+        chrome_options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
         
         driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
         return driver
@@ -71,8 +72,11 @@ class FunctionsClass:
 
     @staticmethod
     def request_status_check(url_for_check):
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+        }
         try:
-            response = requests.get(url_for_check)
+            response = requests.get(url_for_check, headers=headers)
             return response.status_code
         except requests.RequestException as e:
             print(f"Error checking status for URL {url_for_check}: {e}")
@@ -130,3 +134,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
