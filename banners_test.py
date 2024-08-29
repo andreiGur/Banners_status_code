@@ -2,15 +2,25 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.options import Options
 import time
 import requests
+from urllib.parse import urlparse
+import http.client
 
 class FunctionsClass:
 
     @staticmethod
     def build_driver_fun():
-    # Set up Selenium WebDriver (assuming Chrome)
-        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+        # Set up Selenium WebDriver with headless Chrome
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--no-sandbox")
+        chrome_options.add_argument("--disable-dev-shm-usage")
+        chrome_options.add_argument("--disable-gpu")
+        chrome_options.add_argument("--window-size=1920,1080")
+        
+        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
         return driver
 
     @staticmethod
@@ -47,7 +57,6 @@ class FunctionsClass:
             print(f"Error occurred: {e}")
             return None
 
-
     @staticmethod
     def request_status_check(url_for_check):
         try:
@@ -66,7 +75,6 @@ class FunctionsClass:
         driver = FunctionsClass.build_driver_fun()
         driver.get(full_url)
         driver.close()
-
 
 def main():
     driver = FunctionsClass.build_driver_fun()
