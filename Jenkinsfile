@@ -40,11 +40,8 @@ pipeline {
 
     post {
         always {
-            // Clean up the workspace after the build within a node context
-            node {
-                cleanWs()
-            }
+            // Clean up the workspace after the build
+            cleanWs()
         }
     }
 }
-
