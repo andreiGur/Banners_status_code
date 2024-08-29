@@ -31,14 +31,18 @@ class FunctionsClass:
         driver.maximize_window()
         driver.get("http://mobileservicesnow.in/odds_link_maker.php")
         
-        # Add explicit wait to ensure elements are loaded
-        WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//*[@id='login']"))
-        )
-        
-        driver.find_element(By.XPATH, "//*[@id='login']").send_keys("andrei")
-        driver.find_element(By.XPATH, "//*[@id='pass']").send_keys("jvQ*U0y0)Flh0n3H")
-        driver.find_element(By.XPATH, "//*[@id='main']/div[1]/form/input[3]").click()
+        try:
+            # Add explicit wait to ensure elements are loaded
+            WebDriverWait(driver, 20).until(
+                EC.presence_of_element_located((By.XPATH, "//*[@id='login']"))
+            )
+            driver.find_element(By.XPATH, "//*[@id='login']").send_keys("andrei")
+            driver.find_element(By.XPATH, "//*[@id='pass']").send_keys("jvQ*U0y0)Flh0n3H")
+            driver.find_element(By.XPATH, "//*[@id='main']/div[1]/form/input[3]").click()
+        except Exception as e:
+            print("An error occurred during sign-in:", e)
+            print("Page Source:", driver.page_source)  # Print the page source for debugging
+            raise
 
     @staticmethod
     def get_status_code(url):
