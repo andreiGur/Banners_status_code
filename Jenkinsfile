@@ -17,7 +17,7 @@ pipeline {
 
         stage('Setup Python Environment') {
             steps {
-                // Create a virtual environment and install dependencies using .
+                // Create a virtual environment and install dependencies
                 sh '''
                     #!/bin/sh
                     python3 -m venv venv
@@ -30,11 +30,11 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                // Run your Python test script using .
+                // Run your Python test script located at the root of the repository
                 sh '''
                     #!/bin/sh
                     . venv/bin/activate
-                    python3 My_Python_Scripts/banners_test.py
+                    python3 banners_test.py
                 '''
             }
         }
