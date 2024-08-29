@@ -1,8 +1,10 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from webdriver_manager.chrome import ChromeDriverManager
 import time
 import requests
 from urllib.parse import urlparse
@@ -28,6 +30,12 @@ class FunctionsClass:
         driver.get("http://mobileservicesnow.in")
         driver.maximize_window()
         driver.get("http://mobileservicesnow.in/odds_link_maker.php")
+        
+        # Add explicit wait to ensure elements are loaded
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, "//*[@id='login']"))
+        )
+        
         driver.find_element(By.XPATH, "//*[@id='login']").send_keys("andrei")
         driver.find_element(By.XPATH, "//*[@id='pass']").send_keys("jvQ*U0y0)Flh0n3H")
         driver.find_element(By.XPATH, "//*[@id='main']/div[1]/form/input[3]").click()
@@ -101,8 +109,6 @@ def main():
     for link in all_links:
         href = link.get_attribute("href")
         if href:
-            #print("\nLink:")
-            #print(href)
             status_code = FunctionsClass.request_status_check(href)
             print("Request status code:")
             print(status_code)
