@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        GITHUB_TOKEN = credentials('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') // This assumes you have added the PAT with this exact ID in Jenkins
+        GITHUB_TOKEN = credentials('github-credentials') // This assumes you have added the PAT with this exact ID in Jenkins
     }
 
     stages {
@@ -40,8 +40,10 @@ pipeline {
 
     post {
         always {
-            // Clean up the workspace after the build
-            cleanWs()
+            // Clean up the workspace after the build within a node context
+            node {
+                cleanWs()
+            }
         }
     }
 }
